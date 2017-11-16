@@ -1,0 +1,289 @@
+
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Delhi Layers</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class='modal'>
+		<h2 class='modal-title'>About this project</h2>
+		<div class='modal-body'><p>The condition of Delhi’s urban waterways is the result of 150 years of policy and planning that has severed the relationship between the city and its water.</p>
+
+<p>The rehabilitation of Delhi’s waterways requires a holistic approach that considers all of the city’s systems in conjunction.</p>
+
+<p>The Vision proposes to understand the Najafgarh Drain and its tributaries as structural elements of the city –as a geographical urban armature around which the city organizes its systems, including public spaces, public facilities, urban ecologies, and mobility.</p><p>Map data courtesy of <a href='https://www.mapbox.com/studio/'>Mapbox Studio</a> </a></p><p>For questions or to improve this map, contact <a href='mailto:ssv4yt@virginia.edu'>Siddharth Velamakanni</a></p></div>
+		<button class='close-button'>&times;</button>  	<!-- A special "x" character (the multiply sign) used in close buttons -->	
+	</div>
+	<div id='screen'></div>
+
+	<!-- Button to hide or show "About this map" modal -->	
+	<button type='button' class='button-default' id="about">About this map</button>
+<style>
+    #menu {
+        background: #fff;
+        position: absolute;
+        z-index: 1;
+        top: 10px;
+        right: 10px;
+        border-radius: 3px;
+        width: 120px;
+        border: 1px solid rgba(0,0,0,0.4);
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    #menu a {
+        font-size: 13px;
+        color: #404040;
+        display: block;
+        margin: 0;
+        padding: 0;
+        padding: 10px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(0,0,0,0.25);
+        text-align: center;
+    }
+
+    #menu a:last-child {
+        border: none;
+    }
+
+    #menu a:hover {
+        background-color: #f8f8f8;
+        color: #404040;
+    }
+
+    #menu a.active {
+        background-color: #3887be;
+        color: #ffffff;
+    }
+
+    #menu a.active:hover {
+        background: #3074a4;
+    }
+</style>
+
+<nav id="menu"></nav>
+<div id="map"></div>
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1Ijoic3JpY2hhbmRyYSIsImEiOiJjajd0YWNvZHExbHJnMndxcnFzN3E2OGphIn0.U0f61po2cIjPIhH7Hz8V6g';
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/srichandra/cj8mjlw816w652rpfyhk4qunh',
+    zoom: 10,
+    center: [77.226654, 28.585488]
+});
+
+map.on('load', function () {
+    map.addSource('Transport_Points-20171116T091-bxao5n', {
+        type: 'vector',
+        url: 'mapbox://srichandra.cwdfsqa7'
+    });
+    map.addLayer({
+        'id': 'Transport_Points',
+        'type': 'circle',
+        'source': 'Transport_Points-20171116T091-bxao5n',
+        'layout': {
+            'visibility': 'visible'
+        },
+        'paint': {
+            'circle-radius': 8,
+            'circle-color': 'rgba(19,94,155,1)'
+        },
+        'source-layer': 'Transport_Points-20171116T091-bxao5n'
+    });
+
+    map.addSource('del-1j8c2r', {
+        type: 'vector',
+        url: 'mapbox://srichandra.b5xkn9c3'
+    });
+    map.addLayer({
+        'id': 'Boundary',
+        'type': 'fill',
+        'source': 'del-1j8c2r',
+        'source-layer': 'del-1j8c2r',
+        'layout': {
+            'visibility': 'visible'
+            
+        },
+        'paint': {
+            'fill-color': 'rgba(255,255,255,0.5)'
+            
+        }
+    });
+	    map.addSource('Ameneties-20171116T083735Z-00-0gjtmq', {
+        type: 'vector',
+        url: 'mapbox://srichandra.bzbtfz0p'
+    });
+    map.addLayer({
+        'id': 'Ameneties',
+        'type': 'circle',
+        'source': 'Ameneties-20171116T083735Z-00-0gjtmq',
+        'source-layer': 'Ameneties-20171116T083735Z-00-0gjtmq',
+        'layout': {
+            'visibility': 'visible'
+            
+        },
+        'paint': {
+            'circle-radius': 8,
+            'circle-color': 'rgba(234,164,33,1)'
+        }
+    });
+	map.addSource('Waterways-2tufni', {
+        type: 'vector',
+        url: 'mapbox://srichandra.236bgl0s'
+    });
+    map.addLayer({
+        'id': 'Waterways',
+        'type': 'line',
+        'source': 'Waterways-2tufni',
+        'source-layer': 'Waterways-2tufni',
+        'layout': {
+            'visibility': 'visible'
+            
+        },
+        'paint': {
+            'line-color': 'rgba(78,131,140,1)',
+            'line-width': 1
+        }
+    });
+	map.addSource('Aeroways-20171116T083507Z-001-0qrbj4', {
+        type: 'vector',
+        url: 'mapbox://srichandra.65cmo2qx'
+    });
+    map.addLayer({
+        'id': 'Aeroways',
+        'type': 'line',
+        'source': 'Aeroways-20171116T083507Z-001-0qrbj4',
+        'source-layer': 'Aeroways-20171116T083507Z-001-0qrbj4',
+        'layout': {
+            'visibility': 'visible'
+            
+        },
+        'paint': {
+            'line-color': 'rgba(104,18,84,1)',
+            'line-width': 1.5
+        }
+    });
+	
+	map.addSource('Barrier_Points-20171116T08511-0s0tvc', {
+        type: 'vector',
+        url: 'mapbox://srichandra.2dv5ibs4'
+    });
+    map.addLayer({
+        'id': 'Barrier_Points',
+        'type': 'line',
+        'source': 'Barrier_Points-20171116T08511-0s0tvc',
+        'source-layer': 'Barrier_Points-20171116T08511-0s0tvc',
+        'layout': {
+            'visibility': 'visible'
+            
+        },
+        'paint': {
+            'line-color': 'rgba(175,39,12,1)',
+            'line-width': 1.5
+        }
+    }); 
+	map.addSource('Landuse-20171116T090222Z-001-c38rjv', {
+        type: 'vector',
+        url: 'mapbox://srichandra.9j4kt5kb'
+    });
+    map.addLayer({
+        'id': 'Landuse',
+        'type': 'fill',
+        'source': 'Landuse-20171116T090222Z-001-c38rjv',
+        'source-layer': 'Landuse-20171116T090222Z-001-c38rjv',
+        'layout': {
+            'visibility': 'visible'
+            
+        },
+        'paint': {
+            'fill-color': 'rgba(237,206,107,0.5)'
+            
+        }
+    });
+	map.addSource('Roads-32xv1m', {
+        type: 'vector',
+        url: 'mapbox://srichandra.4oxetjdh'
+    });
+    map.addLayer({
+        'id': 'Roads',
+        'type': 'line',
+        'source': 'Roads-32xv1m',
+        'source-layer': 'Roads-32xv1m',
+        'layout': {
+            'visibility': 'visible'
+            
+        },
+        'paint': {
+            'line-color': 'rgba(113,114,114,1)',
+            'line-width': 1.5
+        }
+    });
+	map.addSource('Buildings-20171116T085306Z-00-cb0hud', {
+        type: 'vector',
+        url: 'mapbox://srichandra.433ewnlf'
+    });
+    map.addLayer({
+        'id': 'Buildings',
+        'type': 'fill',
+        'source': 'Buildings-20171116T085306Z-00-cb0hud',
+        'source-layer': 'Buildings-20171116T085306Z-00-cb0hud',
+        'layout': {
+            'visibility': 'visible'
+            
+        },
+        'paint': {
+            'fill-color': 'rgba(163,168,168,1)'
+            
+        }
+    });
+	
+	
+
+});
+
+
+var toggleableLayerIds = [ 'Boundary', 'Transport_Points','Ameneties','Waterways','Aeroways','Barrier_Points','Landuse','Roads','Buildings' ];
+
+for (var i = 0; i < toggleableLayerIds.length; i++) {
+    var id = toggleableLayerIds[i];
+
+    var link = document.createElement('a');
+    link.href = '#';
+    link.className = 'active';
+    link.textContent = id;
+
+    link.onclick = function (e) {
+        var clickedLayer = this.textContent;
+        e.preventDefault();
+        e.stopPropagation();
+
+        var visibility = map.getLayoutProperty(clickedLayer, 'visibility');
+
+        if (visibility === 'visible') {
+            map.setLayoutProperty(clickedLayer, 'visibility', 'none');
+            this.className = '';
+        } else {
+            this.className = 'active';
+            map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
+        }
+    };
+
+    var layers = document.getElementById('menu');
+    layers.appendChild(link);
+
+}
+
+</script>
+
+</body>
+</html>
